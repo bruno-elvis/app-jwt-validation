@@ -1,0 +1,16 @@
+{
+  "name": "app_jwt_validation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Bruno-Elvis/app_jwt_validation.git",
+  "author": "Bruno Silva <brunoelvis@outlook.com.br>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.8.7",
+    "tsx": "^3.14.0",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  }
+}
