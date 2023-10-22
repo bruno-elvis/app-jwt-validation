@@ -11,6 +11,12 @@ export default function verify(options: IVerifyOptions) {
 
     const [ headerSent, payloadSent, signatureSent ] = token.split('.');
 
+    const decodePayload = JSON.parse(
+        Buffer
+            .from(payloadSent, 'base64url')
+            .toString('utf-8')
+    );
+
     const signature = generateSignature({
         header: headerSent,
         payload: payloadSent,
@@ -19,11 +25,12 @@ export default function verify(options: IVerifyOptions) {
     });
 
     if (signature !== signatureSent) {
-        throw new Error('Token JWT inválid!')
+        throw new Error('Token JWT inválid!');
         
-    } else if (signature === signatureSent) {
-        console.log('Token OK');
-        
+    } else if (decodePayload.exp < Date.now()) {
+        throw new Error('Token JWT expired!');
+
     };
-    
+
+    return decodePayload;
 };
