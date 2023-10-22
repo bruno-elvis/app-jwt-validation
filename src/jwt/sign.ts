@@ -1,4 +1,4 @@
-import { createHmac } from 'node:crypto'; // método para geração de chaves HMAC
+import generateSignature from "./generateSignature";
 
 interface ISignOptions {
     data: Record<string, any>;
@@ -7,7 +7,8 @@ interface ISignOptions {
 
 };
 
-export default function sign(options: ISignOptions) {
+export default function sign(options: ISignOptions) : string {
+    const { data, exp, secret } = options;
     //Header
     const header = {
         alg: 'HS256',
@@ -21,25 +22,25 @@ export default function sign(options: ISignOptions) {
 
     //Payload
     const payload = {
-        ...options.data,
+        ...data,
         iat: Date.now(),
-        exp: options.exp
+        exp
 
     };
 
     const base64EncodedPayload = Buffer
     .from(JSON.stringify(payload))
     .toString("base64url");
-    
-    //Signature
-    const hmac = createHmac('sha256', options.secret); // Geração da chave/instância HMAC
 
-    const signature = hmac.update(`${base64EncodedHeader}.${base64EncodedPayload}`)
-    .digest('base64url'); // Calcula o resumo HMAC de todos os dados passados através das informações do token recebidas
+    //Signature
+    const signature = generateSignature({
+        header: base64EncodedHeader,
+        payload: base64EncodedPayload,
+        secret
+
+    });    
     
     // Por fim retorna o token no padrão JWT
     return `${base64EncodedHeader}.${base64EncodedPayload}.${signature}`;
-
-    
     
 };

@@ -1,6 +1,9 @@
 import sign from "./jwt/sign";
+import verify from "./jwt/verify";
 
-sign({
+const secret = 'epa';
+
+const token = sign({
     exp: Date.now() + (24 * 60 * 60 * 1000),
 
     data: {
@@ -8,6 +11,8 @@ sign({
         roles: ['admin', 'master']
     },
 
-    secret: 'epa' 
+    secret
 
 });
+
+verify({ token, secret });
