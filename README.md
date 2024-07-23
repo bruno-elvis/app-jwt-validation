@@ -23,7 +23,6 @@
 
 ## 🔗 Quick Links
 
-> - [📍 Overview](#-overview)
 > - [📂 Repository Structure](#-repository-structure)
 > - [🧩 Modules](#-modules)
 > - [🚀 Getting Started](#-getting-started)
